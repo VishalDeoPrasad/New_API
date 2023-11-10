@@ -26,7 +26,7 @@ func (m *Mid) Authenticate(next gin.HandlerFunc) gin.HandlerFunc {
 
 		parts := strings.Split(authHeader, " ")
 		if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
-			err := errors.New("expected authorization header format: Bearer <token>")
+			err := errors.New("provide, Bearer token:")
 			log.Error().Err(err).Str("Trace Id", traceId).Send()
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			return
