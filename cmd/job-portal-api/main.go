@@ -25,7 +25,7 @@ func main() {
 	log.Info().Msg("Welcome to Job Portal")
 }
 func StartApplication() error {
-	log.Info().Msg("Main: Started: Intilaizing authentication")
+	log.Info().Msg("Main: Started: Intilaizing authentication Process")
 	privatePEM, err := os.ReadFile("private.pem")
 	if err != nil {
 		return fmt.Errorf("reading the auth private key %w", err)
@@ -47,7 +47,7 @@ func StartApplication() error {
 		return fmt.Errorf("constructing auth %w", err)
 	}
 
-	log.Info().Msg("main : Started : Initializing db")
+	log.Info().Msg("main : Started : Initializing Database Process")
 	db, err := database.Open()
 	if err != nil {
 		return fmt.Errorf("connecting to db %w", err)
@@ -61,7 +61,7 @@ func StartApplication() error {
 
 	err = pg.PingContext(ctx)
 	if err != nil {
-		return fmt.Errorf("database is not connected: %w ", err)
+		return fmt.Errorf("can't ping to database, database is not connected: %w ", err)
 	}
 	repo, err := repository.NewRepository(db)
 	if err != nil {
