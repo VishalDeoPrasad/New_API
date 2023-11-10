@@ -24,10 +24,6 @@ type RespondJApplicant struct {
 	Jobs UserApplicant `json:"jobApplication"`
 }
 type UserApplicant struct {
-	// Name    string `json:"name" validate:"required"`
-	// College string `json:"college_name" validate:"required"`
-	// JobId   uint   `json:"job_id" validate:"required"`
-	// Job     NewJob    `json:"job_app"`
 	NoticePeriod    string `json:"notice_period"`
 	Experience      string `json:"experience"`
 	Location        []uint `json:"location"`
