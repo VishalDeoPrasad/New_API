@@ -25,12 +25,12 @@ type UserService interface {
 	ViewJobDetails(ctx context.Context, cid uint64) ([]models.Job, error)
 	ViewAllJobPostings(ctx context.Context) ([]models.Job, error)
 	ViewJobDetailsById(ctx context.Context, cid uint64) (models.Job, error)
-	FilterApplications(ctx context.Context, jobApplication []models.RespondJApplicant) ([]models.RespondJApplicant, error)
+	SelectApplications(ctx context.Context, jobApplication []models.RespondJApplicant) ([]models.RespondJApplicant, error)
 }
 
 func NewService(userRepo repository.UserRepo, a auth.TokenAuth) (UserService, error) {
 	if userRepo == nil {
-		return nil, errors.New("interface cannot be nil")
+		return nil, errors.New("check your interface it cannot be nil")
 	}
 	return &Service{
 		UserRepo: userRepo,
