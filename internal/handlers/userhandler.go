@@ -34,7 +34,7 @@ type NewHandler interface {
 	ViewAllCompanies(c *gin.Context)
 	AddCompany(c *gin.Context)
 	ViewCompany(c *gin.Context)
-	ProcessApplication(c *gin.Context)
+	ApplyingProcess(c *gin.Context)
 }
 
 func (h *handler) Login(c *gin.Context) {
