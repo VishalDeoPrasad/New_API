@@ -23,25 +23,22 @@ func API(a auth.TokenAuth, sc service.UserService) *gin.Engine {
 		return nil
 	}
 	r.Use(middleware.Log(), gin.Recovery())
-	r.POST("/api/register", h.SignUp)
-	r.POST("/api/login", h.Login)
+	r.POST("signup", h.SignUp)
+	r.POST("login", h.Login)
 	r.GET("/check", m.Authenticate((check)))
-	
-	
-	r.POST("/api/companies", m.Authenticate(h.AddCompany))
-	r.GET("/api/companies", m.Authenticate(h.ViewAllCompanies))
-	r.GET("/api/companies/:id", m.Authenticate(h.ViewCompany))
-	
 
-	r.POST("/api/companies/:cid/jobs", m.Authenticate(h.AddJob))
-	//r.GET("/api/companies/:cid/jobs", m.Authenticate(h.ViewJobByCompanyId))
-	r.GET("/api/jobs", m.Authenticate(h.ViewAllJobs))
-	r.GET("/api/jobs/:id", m.Authenticate(h.ViewJobById))
-	r.POST("/api/process", m.Authenticate(h.ProcessApplication))
+	r.POST("/addcompanies", m.Authenticate(h.AddCompany))
+	r.GET("/getcompanies", m.Authenticate(h.ViewAllCompanies))
+	r.GET("/fetchcompanies/:id", m.Authenticate(h.ViewCompany))
+
+	r.POST("/companies/addjob/:cid", m.Authenticate(h.AddJob))
+	r.GET("/fetchAlljobs", m.Authenticate(h.ViewAllJobs))
+	r.GET("/job/:id", m.Authenticate(h.ViewJobById))
+	r.POST("/apply", m.Authenticate(h.ApplyingProcess))
 
 	return r
 }
 func check(c *gin.Context) {
-	c.JSON(http.StatusOK, "Msg :ok")
+	c.JSON(http.StatusOK, "Message :Working... Status Ok")
 
 }
