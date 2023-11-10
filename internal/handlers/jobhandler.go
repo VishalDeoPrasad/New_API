@@ -13,46 +13,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (h *handler) ProcessApplication(c *gin.Context) {
-
-	ctx := c.Request.Context()
-	traceid, ok := ctx.Value(middleware.TraceIdkey).(string)
-	if !ok {
-		log.Error().Msg("traceid missing from context")
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": http.StatusText(http.StatusInternalServerError),
-		})
-		return
-	}
-	_, ok = ctx.Value(auth.Ctxkey).(jwt.RegisteredClaims)
-	if !ok {
-		log.Error().Str("Trace Id", traceid).Msg("login first")
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": http.StatusText(http.StatusUnauthorized)})
-		return
-	}
-	var jobApplication []models.RespondJApplicant
-
-	err := json.NewDecoder(c.Request.Body).Decode(&jobApplication)
-	if err != nil {
-		log.Error().Err(err).Str("trace id", traceid)
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": "please provide all fields",
-		})
-		return
-	}
-	appicants, err := h.service.FilterApplications(ctx, jobApplication)
-	if err != nil {
-		log.Error().Err(err).Str("trace id", traceid)
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": "unable to filter records",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, appicants)
-
-}
-
 func (h *handler) ViewJobById(c *gin.Context) {
 	ctx := c.Request.Context()
 	traceid, ok := ctx.Value(middleware.TraceIdkey).(string)
